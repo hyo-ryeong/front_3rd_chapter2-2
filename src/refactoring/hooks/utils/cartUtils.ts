@@ -1,4 +1,4 @@
-import { CartItem, Coupon } from '../../../types'
+import { CartItem, Coupon, Product } from '../../../types'
 
 // 장바구니 아이템의 총 금액을 계산
 export const calculateItemTotal = (item: CartItem) => {
@@ -53,4 +53,10 @@ export const updateCartItemQuantity = (cart: CartItem[], productId: string, newQ
       return item
     })
     .filter((item): item is CartItem => item !== null)
+}
+
+// 남은재고 수량
+export const getRemainingStock = (cart: CartItem[], product: Product) => {
+  const cartItem = cart.find((item) => item.product.id === product.id)
+  return product.stock - (cartItem?.quantity || 0)
 }
